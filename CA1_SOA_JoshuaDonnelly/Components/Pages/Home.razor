@@ -4,9 +4,32 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Upcoming Esports Matches</h1>
 
-Welcome to your new app.
+@if (!shouldRender)
+{
+    <p>Loading upcoming matches...</p>
+}
+else if (getMatchesError)
+{
+    <p>There was an error retrieving the Esports Data...</p>
+}
+else if (Matches == null || !Matches.Any())
+{
+    <p>No upcoming matches available...</p>
+}
+else
+{
+    @foreach (var match in Matches)
+    {
+        <div class="card p-3 mb-3">
+            <h4>@match.Game</h4>
+            <p>@match.TeamOne vs @match.TeamTwo</p>
+            <p>@match.Tournament</p>
+            <p>@match.StartTime</p>
+        </div>
+    }
+}
 
 @code
 {
@@ -15,10 +38,27 @@ Welcome to your new app.
     private bool shouldRender;
 
     protected override bool ShouldRender() => shouldRender;
+    
+    [Inject]
+    public IConfiguration Configuration  { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
-        
+        try
+        {
+            Matches = await PandaScoreService.GetUpcomingMatchesAsync(Configuration);
+
+            if (Matches == null || !Matches.Any())
+            {
+                getMatchesError = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            getMatchesError = true;
+        }
+        shouldRender = true;
     }
     
 }

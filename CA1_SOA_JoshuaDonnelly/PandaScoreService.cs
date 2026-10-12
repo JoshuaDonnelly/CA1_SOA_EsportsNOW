@@ -2,6 +2,7 @@
 using RestSharp;
 using CA1_SOA_JoshuaDonnelly.Models;
 using Newtonsoft.Json.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace CA1_SOA_JoshuaDonnelly;
 
@@ -10,10 +11,11 @@ public class PandaScoreService
     public static readonly string PANDASCORE_URL = "https://api.pandascore.co/";
 
     public static async Task<List<EsportsMatches>>
-        GetUpcomingMatchesAsync(string apiToken)
+        GetUpcomingMatchesAsync(IConfiguration config)
     {
         var client = new RestClient(PANDASCORE_URL);
         var request = new RestRequest("matches/upcoming");
+        var apiToken = config["PandaScore:ApiToken"] ?? "";
 
         request.AddHeader(
             "Authorization", $"Bearer {apiToken}");

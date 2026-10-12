@@ -2,9 +2,9 @@
 @using CA1_SOA_JoshuaDonnelly.Models
 
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Esports Matches</PageTitle>
 
-<h1>Upcoming Esports Matches</h1>
+<h1 class = "EsportsMatchHeading">Upcoming Esports Matches</h1>
 
 @if (!shouldRender)
 {
@@ -22,9 +22,13 @@ else
 {
     @foreach (var match in Matches)
     {
-        <div class="card p-3 mb-3">
+        <div class="card gameCard">
             <h4>@match.Game</h4>
-            <p>@match.TeamOne vs @match.TeamTwo</p>
+            <div class = "teamsContainer">
+                <p class = "teamOne">@match.TeamOne</p>
+                <p class = "versus">VS</p>
+                <p class = "teamTwo">@match.TeamTwo</p>
+            </div>
             <p>@match.Tournament</p>
             <p>@match.StartTime</p>
         </div>

@@ -5,3 +5,4 @@ Using PandaScore and Twitch APIs within a Blazor Application.
 
 - PandaScore documentation (https://developers.pandascore.co/docs/getting-started)
 - Twitch API (https://dev.twitch.tv/docs/api)
+- API secret handler (https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-10.0&tabs=windows%2Cpowershell)

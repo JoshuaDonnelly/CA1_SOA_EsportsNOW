@@ -36,7 +36,22 @@ public class PandaScoreService
             {
                 foreach (var i in jsonMatches)
                 {
-                    var opponents = i["opponents"];
+                    var opponents = i["opponents"] as JArray;
+                    
+                    string teamOne = "Unknown Team One";
+                    string teamTwo = "Unknown Team Two";
+                    
+                    if (opponents != null && opponents.Count > 0)
+                    {
+                        teamOne = opponents[0]?["opponent"]?["name"]?.ToString()
+                                  ?? "Unknown Team One";
+                    }
+
+                    if (opponents != null && opponents.Count > 1)
+                    {
+                        teamTwo = opponents[1]?["opponent"]?["name"]?.ToString()
+                                  ?? "Unknown Team Two";
+                    }
 
                     var match = new EsportsMatches
                     {
@@ -46,11 +61,8 @@ public class PandaScoreService
                         Tournament = i["tournament"]?["name"]?.ToString()
                                     ?? "Unknown Tournament",
 
-                        TeamOne = opponents[0]?["opponent"]?["name"]?.ToString()
-                                    ?? "Unknown Team One",
-
-                        TeamTwo = opponents[1]?["opponent"]?["name"]?.ToString()
-                                    ?? "Unknown Team Two",
+                        TeamOne = teamOne,
+                        TeamTwo = teamTwo,
 
                         StartTime = i["begin_at"]?.ToString() 
                                     ?? "Unknown Start Time"

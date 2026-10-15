@@ -23,7 +23,6 @@ C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\D
 C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\scopedcss\Components\Layout\ReconnectModal.razor.rz.scp.css
 C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\scopedcss\bundle\CA1_SOA_JoshuaDonnelly.styles.css
 C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\scopedcss\projectbundle\CA1_SOA_JoshuaDonnelly.bundle.scp.css
-C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\compressed\nzl7evzppb-{0}-khy4lop6wu-khy4lop6wu.gz
 C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\compressed\dle2xqgako-{0}-t1cqhe9u97-t1cqhe9u97.gz
 C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\compressed\gxwb6rkfma-{0}-c2jlpeoesf-c2jlpeoesf.gz
 C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\compressed\qowlcc9ql6-{0}-sejl45xvog-sejl45xvog.gz
@@ -173,3 +172,9 @@ C:\Users\joshu\RiderProjects\CA1_SOA_EsportsNOW\CA1_SOA_JoshuaDonnelly\obj\Debug
 C:\Users\joshu\RiderProjects\CA1_SOA_EsportsNOW\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\CA1_SOA_JoshuaDonnelly.pdb
 C:\Users\joshu\RiderProjects\CA1_SOA_EsportsNOW\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\CA1_SOA_JoshuaDonnelly.genruntimeconfig.cache
 C:\Users\joshu\RiderProjects\CA1_SOA_EsportsNOW\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\ref\CA1_SOA_JoshuaDonnelly.dll
+C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\bin\Debug\net10.0\Newtonsoft.Json.dll
+C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\bin\Debug\net10.0\RestSharp.dll
+C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\CA1_SOA_JoshuaDonnelly.csproj.AssemblyReference.cache
+C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\CA1_SOA_JoshuaDonnelly.sourcelink.json
+C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\CA1_SOA_.06A1A164.Up2Date
+C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\compressed\nzl7evzppb-{0}-ioz342gtpy-ioz342gtpy.gz

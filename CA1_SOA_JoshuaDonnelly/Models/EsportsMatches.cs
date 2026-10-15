@@ -7,4 +7,6 @@ public class EsportsMatches
     public string TeamOne { get; set; } = "";
     public string TeamTwo { get; set; } = "";
     public string StartTime { get; set; } = "";
+    public string TeamOneImage { get; set; } = "";
+    public string TeamTwoImage { get; set; } = "";
 }

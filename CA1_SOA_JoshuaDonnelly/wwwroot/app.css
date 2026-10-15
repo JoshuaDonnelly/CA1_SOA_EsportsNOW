@@ -63,7 +63,7 @@ h1:focus {
     border-color: #929292;
 }
 .gameCard {
-    background-color: #313338;
+    background-color: #121212 ;
     padding: 3px;
     border-radius: 6px;
     border: 1px solid #424242;
@@ -82,10 +82,17 @@ h1:focus {
 }
 .teamsContainer {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 80px 1fr auto 1fr 80px;
     align-items: center;
     width: 100%;
     padding: 12px;
+}
+.teamImage {
+    height: 64px;
+    width: 64px;
+    object-fit: scale-down;
+    justify-self: anchor-center;
+    
 }
 .teamOne {
     margin: 0;

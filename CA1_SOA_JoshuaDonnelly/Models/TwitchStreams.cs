@@ -7,4 +7,6 @@ public class TwitchStreams
     public string Title { get; set; } = "";
     public int ViewerCount { get; set; }
     public string ThumbnailUrl { get; set; } = "";
+    
+    public string UserLogin  { get; set; } = "";
 }

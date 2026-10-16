@@ -27,12 +27,12 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/joshu/RiderProjects/CA1_SOA_EsportsNOW/CA1_SOA_JoshuaDonnelly/Components/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/joshu/RiderProjects/CA1_SOA_EsportsNOW/CA1_SOA_JoshuaDonnelly/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/joshu/RiderProjects/CA1_SOA_EsportsNOW/CA1_SOA_JoshuaDonnelly/Components/Pages/GameDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xHYW1lRGV0YWlscy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/joshu/RiderProjects/CA1_SOA_EsportsNOW/CA1_SOA_JoshuaDonnelly/Components/Pages/Home.razor]
@@ -41,10 +41,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/joshu/RiderProjects/CA1_SOA_EsportsNOW/CA1_SOA_JoshuaDonnelly/Components/Pages/NotFound.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xOb3RGb3VuZC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/joshu/RiderProjects/CA1_SOA_EsportsNOW/CA1_SOA_JoshuaDonnelly/Components/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/joshu/RiderProjects/CA1_SOA_EsportsNOW/CA1_SOA_JoshuaDonnelly/Components/Routes.razor]

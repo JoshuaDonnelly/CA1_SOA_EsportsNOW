@@ -71,6 +71,8 @@ h1:focus {
     align-items: center;
     opacity: 0.9;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    cursor: pointer;
+    pointer-events: auto !important;
 }
 .gameCard:hover {
     opacity: 1;

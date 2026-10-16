@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using CA1_SOA_JoshuaDonnelly.Models
+@inject NavigationManager Navigation
 
 
 <PageTitle>Esports Matches</PageTitle>
@@ -22,7 +23,11 @@ else
 {
     @foreach (var match in Matches)
     {
-        <div class="card gameCard">
+        
+        <div class="card gameCard"
+             style="cursor: pointer;"
+             @onclick='() => OpenGame(match.Game)'>
+
             <h4>@match.Game</h4>
             <div class = "teamsContainer">
                 <img class = "teamImage" src = "@match.TeamOneImage"><p class = "teamOne">@match.TeamOne</p>
@@ -35,13 +40,56 @@ else
     }
 }
 
+<h2>Live Streams for Upcoming Esports Games</h2>
+
+@if (getStreamsError)
+{
+    <p>There was an error retrieving Twitch streams.</p>
+}
+else if (LiveStreams.Count == 0)
+{
+    <p>No matching live streams were found.</p>
+}
+else
+{
+    @foreach (var stream in LiveStreams)
+    {
+        <div class="card gameCard">
+            <h4>@stream.GameName</h4>
+
+            @if (!string.IsNullOrWhiteSpace(stream.ThumbnailUrl))
+            {
+                <img src="@stream.ThumbnailUrl"
+                     alt="Stream preview for @stream.UserName"
+                     style="max-width: 320px; width: 100%;" />
+            }
+
+            <h5>@stream.UserName</h5>
+            <p>@stream.Title</p>
+            <p>Viewers: @stream.ViewerCount</p>
+
+            @if (!string.IsNullOrWhiteSpace(stream.UserLogin))
+            {
+                <a href="@($"https://www.twitch.tv/{stream.UserLogin}")"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Watch on Twitch
+                </a>
+            }
+        </div>
+    }
+}
+
+
 @code
 {
+    private List<TwitchStreams> LiveStreams = new();
+    private bool getStreamsError;
     private IEnumerable<EsportsMatches>? Matches = [];
     private bool getMatchesError;
     private bool shouldRender;
 
-    protected override bool ShouldRender() => shouldRender;
+    
     
     [Inject]
     public IConfiguration Configuration  { get; set; } = null!;
@@ -63,6 +111,26 @@ else
             getMatchesError = true;
         }
         shouldRender = true;
+
+        if (Matches != null && Matches.Any())
+        {
+            try
+            {
+                var gameNames = Matches.Select(m => m.Game);
+                LiveStreams = await TwitchStreamService.GetStreamsForGamesAsync(Configuration, gameNames);
+            }
+            catch (Exception ex)
+            {
+                getStreamsError = true;
+                Console.WriteLine(ex);
+            }
+        }
     }
+    private void OpenGame(string gameName)
+    {
+        Console.WriteLine($"Clicked game: {gameName}");
+        Navigation.NavigateTo($"/game/{Uri.EscapeDataString(gameName)}");
+    }
+    
     
 }

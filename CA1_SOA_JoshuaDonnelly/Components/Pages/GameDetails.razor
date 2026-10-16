@@ -1,0 +1,46 @@
+﻿@page "/game/{GameName}"
+
+@using CA1_SOA_JoshuaDonnelly.Models
+@inject IConfiguration Configuration
+
+<h1>@GameName</h1>
+
+<a href="/">Back to matches</a>
+
+<h2>Live Streams</h2>
+
+@if (LiveStreams.Count == 0)
+{
+    <p>No live streams found for this game.</p>
+}
+else
+{
+    @foreach (var stream in LiveStreams)
+    {
+        <div class="card gameCard">
+            <h4>@stream.UserName</h4>
+            <p>@stream.Title</p>
+            <p>Viewers: @stream.ViewerCount</p>
+
+            <a href="@($"https://www.twitch.tv/{stream.UserLogin}")"
+               target="_blank"
+               rel="noopener noreferrer">
+                Watch on Twitch
+            </a>
+        </div>
+    }
+}
+
+@code {
+    [Parameter]
+    public string GameName { get; set; } = "";
+
+    private List<TwitchStreams> LiveStreams = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        LiveStreams = await TwitchStreamService.GetStreamsForGamesAsync(
+            Configuration,
+            new List<string> { Uri.UnescapeDataString(GameName) });
+    }
+}

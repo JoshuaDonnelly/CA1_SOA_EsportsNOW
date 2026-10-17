@@ -62,6 +62,11 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+.loadingText {
+    text-align: center;
+    font-size: 5em;
+    font-weight: bold;
+}
 .gameCard {
     background-color: #121212 ;
     padding: 3px;
@@ -118,6 +123,60 @@ h1:focus {
 .EsportsMatchHeading {
     text-align: center;
     padding-bottom: 12px;
+}
+.streamContainer{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 15px;
+    width: 100%;
+    
+}
+.streamCard {
+    background-color: #121212;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #424242;
+    opacity: 0.9;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}
+.streamCard:hover {
+    opacity: 1;
+    border-color: #2b4c83;
+    cursor: pointer;
+}
+.streamCardImage {
+    padding-bottom: 12px;
+    width: 100%; 
+    aspect-ratio: 16 / 9 ;
+    object-fit: cover;
+    border-radius: 6px;
+}
+.streamTitle {
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-bottom: 12px;
+}
+.streamUser {
+    text-align: left;
+    font-weight: bold;
+}
+.streamCard a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.streamCard a:hover {
+    color: #2b4c83;
+}
+
+.streamCard p {
+    margin: 5px 0;
+}
+
+.streamCard .streamTitle {
+    min-height: 3em;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {

@@ -5,23 +5,32 @@
 
 <PageTitle>Esports Matches</PageTitle>
 
-<h1 class = "EsportsMatchHeading">Upcoming Esports Matches</h1>
-
 @if (!shouldRender)
 {
-    <p>Loading upcoming matches...</p>
+    <p class = "loadingText">Loading upcoming matches...</p>
 }
 else if (getMatchesError)
 {
-    <p>There was an error retrieving the Esports Data...</p>
+    <p class = "errorTextOnLoad">There was an error retrieving the Esports Data...</p>
 }
-else if (Matches == null || !Matches.Any())
+else if (shouldRender && Matches == null || shouldRender && !Matches.Any())
 {
-    <p>No upcoming matches available...</p>
+    <p class = "errorTextOnLoad">No upcoming matches available...</p>
 }
 else
 {
-    @foreach (var match in Matches)
+    <h1 class = "EsportsMatchHeading">Upcoming Esports Matches</h1>
+    <div class = "matchSearch">
+        <input type = "search" @bind="SearchText" @bind:event = "oninput" placeholder = "Search Esports Matches" 
+        />
+        
+    </div>
+    @if (FilteredMatches.Count() == 0)
+    {
+        <p class="errorTextOnLoad">Nothing Found with your Search</p>
+    }
+    
+    @foreach (var match in FilteredMatches)
     {
         
         <div class="card gameCard"
@@ -29,29 +38,35 @@ else
              @onclick='() => OpenGame(match.Game)'>
 
             <h4>@match.Game</h4>
-            <div class = "teamsContainer">
-                <img class = "teamImage" src = "@match.TeamOneImage"><p class = "teamOne">@match.TeamOne</p>
-                <p class = "versus">VS</p>
-                <p class = "teamTwo">@match.TeamTwo</p><img class = "teamImage" src = "@match.TeamTwoImage">
+            <div class="teamsContainer">
+                <img class="teamImage" src="@match.TeamOneImage">
+                <p class="teamOne">@match.TeamOne</p>
+                <p class="versus">VS</p>
+                <p class="teamTwo">@match.TeamTwo</p><img class="teamImage" src="@match.TeamTwoImage">
             </div>
             <p>@match.Tournament</p>
             <p>@match.StartTime</p>
         </div>
+        
     }
 }
 
-<h2>Live Streams for Upcoming Esports Games</h2>
-
-@if (getStreamsError)
+@if (!shouldRender)
 {
-    <p>There was an error retrieving Twitch streams.</p>
+    
 }
-else if (LiveStreams.Count == 0)
+
+else if (getStreamsError)
 {
-    <p>No matching live streams were found.</p>
+    <p class = "errorTextOnLoad">There was an error retrieving Twitch streams.</p>
+}
+else if (shouldRender && LiveStreams.Count == 0)
+{
+    <p class = "errorTextOnLoad">No matching live streams were found.</p>
 }
 else
 {
+    <h2>Live Streams for Upcoming Esports Games</h2>
     @foreach (var stream in LiveStreams)
     {
         <div class="card gameCard">
@@ -88,6 +103,16 @@ else
     private IEnumerable<EsportsMatches>? Matches = [];
     private bool getMatchesError;
     private bool shouldRender;
+    private string SearchText = "";
+
+    private IEnumerable<EsportsMatches> FilteredMatches =>
+        Matches.Where(match =>
+            string.IsNullOrWhiteSpace(SearchText) ||
+            (match.Game?.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+            (match.TeamOne?.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+            (match.TeamTwo?.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+            (match.Tournament?.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) ?? false)
+        );
 
     
     

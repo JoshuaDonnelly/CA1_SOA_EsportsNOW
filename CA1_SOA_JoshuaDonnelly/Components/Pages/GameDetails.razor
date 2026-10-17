@@ -15,12 +15,25 @@
 }
 else
 {
+    <div class = "streamContainer">
     @foreach (var stream in LiveStreams)
     {
-        <div class="card gameCard">
-            <h4>@stream.UserName</h4>
-            <p>@stream.Title</p>
-            <p>Viewers: @stream.ViewerCount</p>
+        
+        <div class="card streamCard">
+            
+            @if (!string.IsNullOrWhiteSpace(stream.ThumbnailUrl))
+            {
+                <img src="@stream.ThumbnailUrl"
+                     alt = "Stream Thumbnail for @stream.UserName"
+                     class = "streamCardImage"
+                />
+                    
+               
+            }
+            <h4 class = "streamUser">@stream.UserName</h4>
+            <p class = "streamTitle"> @stream.Title</p>
+            <p>Viewers:
+                @stream.ViewerCount</p>
 
             <a href="@($"https://www.twitch.tv/{stream.UserLogin}")"
                target="_blank"
@@ -28,7 +41,9 @@ else
                 Watch on Twitch
             </a>
         </div>
+        
     }
+    </div>
 }
 
 @code {
@@ -41,6 +56,6 @@ else
     {
         LiveStreams = await TwitchStreamService.GetStreamsForGamesAsync(
             Configuration,
-            new List<string> { Uri.UnescapeDataString(GameName) });
+        new List<string> { Uri.UnescapeDataString(GameName) });
     }
 }

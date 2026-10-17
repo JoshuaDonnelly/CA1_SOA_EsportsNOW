@@ -42,6 +42,17 @@ public class PandaScoreService
                     string teamOne = "Unknown Team One";
                     string teamTwo = "Unknown Team Two";
 
+                    string game = "Unknown Game";
+                    
+                    game = i["videogame"]?["name"]?.ToString() ?? "Unknown Game";
+
+                    if (i["videogame"] != null && i["videogame"]?["name"]?.ToString() == "LoL")
+                    {
+                        game = "League Of Legends";
+                    }
+                    
+                    
+
                     var teamOneImage = "No Image";
                     var teamTwoImage = "No Image";
                     
@@ -65,8 +76,8 @@ public class PandaScoreService
 
                     var match = new EsportsMatches {
                         
-                    Game = i["videogame"]?["name"]?.ToString()
-                        ?? "Unknown Game",
+                        
+                    Game = game,
                     
 
                     Tournament = i["tournament"]?["name"]?.ToString() 

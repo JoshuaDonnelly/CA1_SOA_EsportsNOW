@@ -137,6 +137,7 @@ public class TwitchStreamService
 
     foreach (var i in streamData)
     {
+        
         // Add streams to the streams list as a part of the object we declared in models.
         // The property names on the left are the types that belong to that model,
         // and the properties inside [] belong to the api response. This results

@@ -67,6 +67,19 @@ h1:focus {
     font-size: 5em;
     font-weight: bold;
 }
+.matchSearch {
+    display: flex;
+    justify-content: center;
+}
+.esportsSearchBox {
+    display: inline-block;
+    background-color: #121212 !important;
+    border: 1px solid #2b4c83 !important;
+    padding: 4px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    text-align: left;
+}
 .gameCard {
     background-color: #121212 ;
     padding: 3px;

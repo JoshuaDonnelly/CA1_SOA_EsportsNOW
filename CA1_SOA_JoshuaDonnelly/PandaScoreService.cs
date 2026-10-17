@@ -10,6 +10,15 @@ public class PandaScoreService
 {
     public static readonly string PANDASCORE_URL = "https://api.pandascore.co/";
 
+    public static readonly List<string> SupportedGames = new()
+    {
+        "Counter-Strike",
+        "League Of Legends",
+        "Rainbow Six Siege",
+        "Valorant",
+        "Dota 2"
+    };
+
     public static async Task<List<EsportsMatches>>
         GetUpcomingMatchesAsync(IConfiguration config)
     {
@@ -20,7 +29,7 @@ public class PandaScoreService
         request.AddHeader(
             "Authorization", $"Bearer {apiToken}");
 
-        request.AddParameter("per_page", 10);
+        request.AddParameter("per_page", 20);
 
         var response = await client.ExecuteAsync(request);
 
@@ -46,9 +55,13 @@ public class PandaScoreService
                     
                     game = i["videogame"]?["name"]?.ToString() ?? "Unknown Game";
 
-                    if (i["videogame"] != null && i["videogame"]?["name"]?.ToString() == "LoL")
+                    if (game.Equals("LoL", StringComparison.OrdinalIgnoreCase))
                     {
                         game = "League Of Legends";
+                    }
+                    else if (game.Equals("Rainbow 6 Siege", StringComparison.OrdinalIgnoreCase))
+                    {
+                        game = "Rainbow Six Siege";
                     }
                     
                     
@@ -73,30 +86,28 @@ public class PandaScoreService
                             ?? "No image";
                     }
 
+                    if (SupportedGames != null && SupportedGames.Contains(game, StringComparer.OrdinalIgnoreCase))
+                    {
+                        var match = new EsportsMatches
+                        {
 
-                    var match = new EsportsMatches {
-                        
-                        
-                    Game = game,
-                    
+                            Game = game,
 
-                    Tournament = i["tournament"]?["name"]?.ToString() 
-                        ?? "Unknown Tournament", 
+                            Tournament = i["tournament"]?["name"]?.ToString()
+                                         ?? "Unknown Tournament",
 
-                    TeamOne = teamOne,
-                    TeamTwo = teamTwo, 
-                    
-                    TeamOneImage = teamOneImage,
-                    TeamTwoImage = teamTwoImage,
+                            TeamOne = teamOne,
+                            TeamTwo = teamTwo,
 
-                   // if (Game? == "Counter-Strike"){ }, 
-                    
-                    StartTime = i["begin_at"]?.ToString()
-                        ?? "Unknown Start Time",
-                    
-                };
-                    
-                matches.Add(match);
+                            TeamOneImage = teamOneImage,
+                            TeamTwoImage = teamTwoImage,
+
+                            StartTime = i["begin_at"]?.ToString()
+                                        ?? "Unknown Start Time",
+
+                        };
+                    matches.Add(match);
+                    }
                 }
             }
             return matches;

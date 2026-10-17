@@ -21,7 +21,7 @@ else
 {
     <h1 class = "EsportsMatchHeading">Upcoming Esports Matches</h1>
     <div class = "matchSearch">
-        <input type = "search" @bind="SearchText" @bind:event = "oninput" placeholder = "Search Esports Matches" 
+        <input class="esportsSearchBox" type = "search" @bind="SearchTextMatches" @bind:event = "oninput" placeholder = "Search Esports Matches" 
         />
         
     </div>
@@ -67,7 +67,12 @@ else if (shouldRender && LiveStreams.Count == 0)
 else
 {
     <h2>Live Streams for Upcoming Esports Games</h2>
-    @foreach (var stream in LiveStreams)
+    <div class = "streamSearch">
+        <input class="esportsSearchBox" type = "search" @bind="SearchTextStreams" @bind:event = "oninput" placeholder = "Search Live Streams" 
+        />
+        
+    </div>
+    @foreach (var stream in FilteredStreams)
     {
         <div class="card gameCard">
             <h4>@stream.GameName</h4>
@@ -103,15 +108,24 @@ else
     private IEnumerable<EsportsMatches>? Matches = [];
     private bool getMatchesError;
     private bool shouldRender;
-    private string SearchText = "";
+    private string SearchTextMatches = "";
+    private string SearchTextStreams = "";
 
     private IEnumerable<EsportsMatches> FilteredMatches =>
         Matches.Where(match =>
-            string.IsNullOrWhiteSpace(SearchText) ||
-            (match.Game?.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
-            (match.TeamOne?.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
-            (match.TeamTwo?.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
-            (match.Tournament?.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) ?? false)
+            string.IsNullOrWhiteSpace(SearchTextMatches) ||
+            (match.Game?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+            (match.TeamOne?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+            (match.TeamTwo?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+            (match.Tournament?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false)
+        );
+    
+    private IEnumerable<TwitchStreams> FilteredStreams =>
+        LiveStreams.Where(stream =>
+            string.IsNullOrWhiteSpace(SearchTextStreams) ||
+            (stream.Title?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+            (stream.UserName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+            (stream.GameName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) 
         );
 
     

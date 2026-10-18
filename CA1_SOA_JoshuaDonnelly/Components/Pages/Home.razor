@@ -76,21 +76,30 @@ else
     <h1 class = "EsportsMatchHeading">Live Streams for Ongoing Esports Games</h1>
     
     <div class="streamSearch">
+        <div class = "filterControl">
+            <input class="esportsSearchBox" type="search" @bind="SearchTextStreams" @bind:event="oninput" placeholder="Search Live Streams"/>
+        </div>
         
-        <input class="esportsSearchBox" type="search" @bind="SearchTextStreams" @bind:event="oninput" placeholder="Search Live Streams"/>
-
-        <select class="esportsFilterBox" @bind="SelectedNameStreams">
-
-            <option value="All">All Streamers</option>
-            @foreach (var userName in LiveStreams
-                          .Select(stream => stream.UserName)
-                          .Where(name => !string.IsNullOrWhiteSpace(name))
-                          .Distinct())
-            {
-                <option value="@userName">@userName</option>
-            }
-
-        </select>
+        <div class = "filterControl">
+            <label for="streamFilter">Filter by Streamer</label>
+                <select id="streamFilter" class="esportsFilterBox" @bind="SelectedNameStreams">
+                    <option value="All">All Streamers</option>
+                    @foreach (var userName in LiveStreams
+                                  .Select(stream => stream.UserName)
+                                  .Where(name => !string.IsNullOrWhiteSpace(name))
+                                  .Distinct())
+                    {
+                        <option value="@userName">@userName</option>
+                    }
+                </select>
+        </div>
+        <div class = "filterControl">
+            <label for="streamSort">Sort by Viewers</label>
+                <select id="streamSort" placeholder="awdad" class="esportsFilterBox" @bind="SelectedViewerSort"> <br />
+                    <option value = "Most">Most Viewers</option>
+                    <option value = "Least">Fewest Viewers</option>
+                </select>
+        </div>
     </div>
     @if (!FilteredStreams.Any())
     {
@@ -140,6 +149,7 @@ else
     private string SearchTextStreams = "";
     private string SelectedGameEsports = "All";
     private string SelectedNameStreams = "All";
+    private string SelectedViewerSort = "Most";
     
     
     
@@ -182,7 +192,12 @@ else
             (string.IsNullOrWhiteSpace(SearchTextStreams) ||
             (stream.Title?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
             (stream.UserName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
-            (stream.GameName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false)));
+            (stream.GameName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false)))
+    
+    // Sort by viewer count
+    .OrderBy(stream => SelectedViewerSort == "Most"
+        ? -stream.ViewerCount : stream.ViewerCount);
+        
     
     
     [Inject]
@@ -229,4 +244,4 @@ else
     }
     
     
-}
+}}

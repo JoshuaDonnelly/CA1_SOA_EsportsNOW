@@ -78,7 +78,9 @@ h1:focus {
 }
 .streamSearch {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
 }
 .divider {
     margin: 0 0.5em 24px;
@@ -256,6 +258,18 @@ header {
     padding: 12px;
     color: #ffffff;
     
+}
+.filterControl {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 180px;
+}
+.filterControl input,
+.filterControl select {
+    width: 100%;
+    box-sizing: border-box;
 }
 .backButton:hover {
     border-color: #2b4c83;

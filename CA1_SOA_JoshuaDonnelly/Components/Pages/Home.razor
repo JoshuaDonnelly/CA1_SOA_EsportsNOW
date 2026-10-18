@@ -46,10 +46,9 @@ else
 
             <h4>@match.Game</h4>
             <div class="teamsContainer">
-                <img class="teamImage" src="@match.TeamOneImage">
-                <p class="teamOne">@match.TeamOne</p>
+                <img alt="T1 Image" class="teamImage" src="@match.TeamOneImage"><p class="teamOne">@match.TeamOne</p>
                 <p class="versus">VS</p>
-                <p class="teamTwo">@match.TeamTwo</p><img class="teamImage" src="@match.TeamTwoImage">
+                <p class="teamTwo">@match.TeamTwo</p><img alt ="T2 Image" class="teamImage" src="@match.TeamTwoImage">
             </div>
             <p>@match.Tournament</p>
             <p>@match.StartTime</p>
@@ -68,46 +67,65 @@ else if (getStreamsError)
 {
     <p class = "errorTextOnLoad">There was an error retrieving Twitch streams.</p>
 }
-else if (shouldRender && LiveStreams.Count == 0)
+else if (LiveStreams.Count == 0)
 {
     <p class = "errorTextOnLoad">No matching live streams were found.</p>
 }
 else
 {
-    <h1 class = "EsportsMatchHeading">Live Streams for Upcoming Esports Games</h1>
+    <h1 class = "EsportsMatchHeading">Live Streams for Ongoing Esports Games</h1>
+    
     <div class="streamSearch">
+        
         <input class="esportsSearchBox" type="search" @bind="SearchTextStreams" @bind:event="oninput" placeholder="Search Live Streams"/>
-    </div>
-    <div class = "streamContainer">
-        @foreach (var stream in FilteredStreams)
-        {
-        
-            <div class="card streamCard">
-            
-                @if (!string.IsNullOrWhiteSpace(stream.ThumbnailUrl))
-                {
-                    <img src="@stream.ThumbnailUrl"
-                         alt = "Stream Thumbnail for @stream.UserName"
-                         class = "streamCardImage"
-                    />
-                    
-               
-                }
-                <h4 class = "streamUser">@stream.UserName</h4>
-                <p class = "streamTitle"> @stream.Title</p>
-                <p>Viewers:
-                    @stream.ViewerCount</p>
 
-                <a href="@($"https://www.twitch.tv/{stream.UserLogin}")"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   >
-                    Watch on Twitch
-                </a>
-            </div>
-        
-        }
+        <select class="esportsFilterBox" @bind="SelectedNameStreams">
+
+            <option value="All">All Streamers</option>
+            @foreach (var userName in LiveStreams
+                          .Select(stream => stream.UserName)
+                          .Where(name => !string.IsNullOrWhiteSpace(name))
+                          .Distinct())
+            {
+                <option value="@userName">@userName</option>
+            }
+
+        </select>
     </div>
+    @if (!FilteredStreams.Any())
+    {
+        <p class = "errorTextOnLoad">No Matching Live Streams</p>
+    }
+    else
+    {
+        <div class="streamContainer">
+
+
+            @foreach (var stream in FilteredStreams)
+            {
+                <div class="card streamCard">
+
+                    @if (!string.IsNullOrWhiteSpace(stream.ThumbnailUrl))
+                    {
+                        <img src="@stream.ThumbnailUrl"
+                             alt="Stream Thumbnail for @stream.UserName"
+                             class="streamCardImage"/>
+                    }
+                    <h4 class="streamUser">@stream.UserName</h4>
+                    <p class="streamTitle"> @stream.Title</p>
+                    <p>Viewers:
+                        @stream.ViewerCount</p>
+
+                    <a href="@($"https://www.twitch.tv/{stream.UserLogin}")"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        Watch on Twitch
+                    </a>
+                </div>
+            }
+
+        </div>
+    }
 }
 
 
@@ -121,6 +139,7 @@ else
     private string SearchTextMatches = "";
     private string SearchTextStreams = "";
     private string SelectedGameEsports = "All";
+    private string SelectedNameStreams = "All";
     
     
     
@@ -151,12 +170,19 @@ else
     private IEnumerable<TwitchStreams> FilteredStreams =>
         
         LiveStreams.Where(stream =>
-            string.IsNullOrWhiteSpace(SearchTextStreams) ||
+            // Filter streams
+            (SelectedNameStreams == "All" ||
+                string.Equals(
+                    stream.UserName,
+                    SelectedNameStreams,
+                    StringComparison.OrdinalIgnoreCase))
+        &&
+        
+        
+            (string.IsNullOrWhiteSpace(SearchTextStreams) ||
             (stream.Title?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
             (stream.UserName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
-            (stream.GameName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) 
-            
-        );
+            (stream.GameName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false)));
     
     
     [Inject]

@@ -250,7 +250,7 @@ header {
 .backButton {
     display: flex;
     justify-content: flex-start !important;
-    background-color: #191a1b;
+    background-color: #121212;
     border: 1px solid #000000;
     border-radius: 4px;
     padding: 12px;

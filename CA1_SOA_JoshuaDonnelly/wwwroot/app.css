@@ -67,11 +67,36 @@ h1:focus {
     font-size: 5em;
     font-weight: bold;
 }
+.errorTextOnLoad {
+    text-align: center;
+    font-size: 5em;
+    font-weight: bold;
+}
 .matchSearch {
     display: flex;
     justify-content: center;
 }
+.streamSearch {
+    display: flex;
+    justify-content: center;
+}
+.divider {
+    margin: 0 0.5em 24px;
+    border-bottom: 1px solid #929292;
+    opacity: 0.8;
+    padding-top: 24px;
+    padding-bottom: 24px;
+}
 .esportsSearchBox {
+    display: inline-block;
+    background-color: #121212 !important;
+    border: 1px solid #2b4c83 !important;
+    padding: 4px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    text-align: left;
+}
+.esportsFilterBox {
     display: inline-block;
     background-color: #121212 !important;
     border: 1px solid #2b4c83 !important;
@@ -156,8 +181,8 @@ h1:focus {
 .streamCard:hover {
     opacity: 1;
     border-color: #2b4c83;
-    cursor: pointer;
 }
+
 .streamCardImage {
     padding-bottom: 12px;
     width: 100%; 
@@ -182,6 +207,7 @@ h1:focus {
 }
 .streamCard a:hover {
     color: #2b4c83;
+    cursor: pointer;
 }
 
 .streamCard p {
@@ -219,5 +245,42 @@ header {
 .header-right {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+}
+.backButton {
+    display: flex;
+    justify-content: flex-start !important;
+    background-color: #191a1b;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    padding: 12px;
+    color: #ffffff;
+    
+}
+.backButton:hover {
+    border-color: #2b4c83;
+    color: #2b4c83;
+    cursor: pointer;
+}
+.streamPageGameName {
+    text-align: center;
+    padding-top: 15px;
+}
+.streamPageTopContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #4f4f51;
+    margin-bottom: 12px;
+}
+.backButtonContainer {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.streamPageGameNameContainer {
+    display: flex;
+    justify-content: center;
     align-items: center;
 }

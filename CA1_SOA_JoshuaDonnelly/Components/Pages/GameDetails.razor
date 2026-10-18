@@ -3,15 +3,18 @@
 @using CA1_SOA_JoshuaDonnelly.Models
 @inject IConfiguration Configuration
 
-<h1>@GameName</h1>
+<div class="streamPageTopContainer">
+    <h1 class="streamPageGameName">@GameName : Live Streams</h1>
+    <div class ="backButtonContainer">
+        <a class="backButton" href="/">Back to matches</a>
+    </div>
+</div>
 
-<a href="/">Back to matches</a>
 
-<h2>Live Streams</h2>
 
 @if (LiveStreams.Count == 0)
 {
-    <p>No live streams found for this game.</p>
+    <p class = "errorTextOnLoad">No live streams found for this game.</p>
 }
 else
 {

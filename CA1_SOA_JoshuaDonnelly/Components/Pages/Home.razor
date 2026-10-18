@@ -19,11 +19,18 @@ else if (shouldRender && Matches == null || shouldRender && !Matches.Any())
 }
 else
 {
+    
     <h1 class = "EsportsMatchHeading">Upcoming Esports Matches</h1>
+    
     <div class = "matchSearch">
-        <input class="esportsSearchBox" type = "search" @bind="SearchTextMatches" @bind:event = "oninput" placeholder = "Search Esports Matches" 
-        />
-        
+        <input class="esportsSearchBox" type = "search" @bind="SearchTextMatches" @bind:event = "oninput" placeholder = "Search Esports Matches" />
+        <select class="esportsFilterBox" @bind="SelectedGameEsports">
+            <option value = "All">All Games</option>
+            @foreach (var game in PandaScoreService.SupportedGames)
+            {
+                <option value = "@game">@game</option>
+            }
+        </select>
     </div>
     @if (FilteredMatches.Count() == 0)
     {
@@ -49,6 +56,7 @@ else
         </div>
         
     }
+    <div class = "divider"></div>
 }
 
 @if (!shouldRender)
@@ -66,38 +74,40 @@ else if (shouldRender && LiveStreams.Count == 0)
 }
 else
 {
-    <h2>Live Streams for Upcoming Esports Games</h2>
-    <div class = "streamSearch">
-        <input class="esportsSearchBox" type = "search" @bind="SearchTextStreams" @bind:event = "oninput" placeholder = "Search Live Streams" 
-        />
-        
+    <h1 class = "EsportsMatchHeading">Live Streams for Upcoming Esports Games</h1>
+    <div class="streamSearch">
+        <input class="esportsSearchBox" type="search" @bind="SearchTextStreams" @bind:event="oninput" placeholder="Search Live Streams"/>
     </div>
-    @foreach (var stream in FilteredStreams)
-    {
-        <div class="card gameCard">
-            <h4>@stream.GameName</h4>
+    <div class = "streamContainer">
+        @foreach (var stream in FilteredStreams)
+        {
+        
+            <div class="card streamCard">
+            
+                @if (!string.IsNullOrWhiteSpace(stream.ThumbnailUrl))
+                {
+                    <img src="@stream.ThumbnailUrl"
+                         alt = "Stream Thumbnail for @stream.UserName"
+                         class = "streamCardImage"
+                    />
+                    
+               
+                }
+                <h4 class = "streamUser">@stream.UserName</h4>
+                <p class = "streamTitle"> @stream.Title</p>
+                <p>Viewers:
+                    @stream.ViewerCount</p>
 
-            @if (!string.IsNullOrWhiteSpace(stream.ThumbnailUrl))
-            {
-                <img src="@stream.ThumbnailUrl"
-                     alt="Stream preview for @stream.UserName"
-                     style="max-width: 320px; width: 100%;" />
-            }
-
-            <h5>@stream.UserName</h5>
-            <p>@stream.Title</p>
-            <p>Viewers: @stream.ViewerCount</p>
-
-            @if (!string.IsNullOrWhiteSpace(stream.UserLogin))
-            {
                 <a href="@($"https://www.twitch.tv/{stream.UserLogin}")"
                    target="_blank"
-                   rel="noopener noreferrer">
+                   rel="noopener noreferrer"
+                   >
                     Watch on Twitch
                 </a>
-            }
-        </div>
-    }
+            </div>
+        
+        }
+    </div>
 }
 
 
@@ -110,24 +120,43 @@ else
     private bool shouldRender;
     private string SearchTextMatches = "";
     private string SearchTextStreams = "";
-
+    private string SelectedGameEsports = "All";
+    
+    
+    
+    // Searching
     private IEnumerable<EsportsMatches> FilteredMatches =>
-        Matches.Where(match =>
-            string.IsNullOrWhiteSpace(SearchTextMatches) ||
+        
+        (Matches ??  Enumerable.Empty<EsportsMatches>()) 
+    
+        .Where(match =>
+            // Filter matches
+            (SelectedGameEsports == "All" ||
+             string.Equals(
+                 match.Game,
+                 SelectedGameEsports,
+                 StringComparison.OrdinalIgnoreCase))
+            
+            &&
+            
+            // Search Matches
+            (string.IsNullOrWhiteSpace(SearchTextMatches) ||
             (match.Game?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
             (match.TeamOne?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
             (match.TeamTwo?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
-            (match.Tournament?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false)
+            (match.Tournament?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false))
+            
         );
     
     private IEnumerable<TwitchStreams> FilteredStreams =>
+        
         LiveStreams.Where(stream =>
             string.IsNullOrWhiteSpace(SearchTextStreams) ||
             (stream.Title?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
             (stream.UserName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
             (stream.GameName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) 
+            
         );
-
     
     
     [Inject]
@@ -138,6 +167,8 @@ else
         try
         {
             Matches = await PandaScoreService.GetUpcomingMatchesAsync(Configuration);
+            
+            
 
             if (Matches == null || !Matches.Any())
             {

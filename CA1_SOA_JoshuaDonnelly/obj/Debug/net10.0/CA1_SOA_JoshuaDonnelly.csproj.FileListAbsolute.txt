@@ -176,5 +176,5 @@ C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\bin\D
 C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\CA1_SOA_JoshuaDonnelly.csproj.AssemblyReference.cache
 C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\CA1_SOA_JoshuaDonnelly.sourcelink.json
 C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\CA1_SOA_.06A1A164.Up2Date
-C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\compressed\nzl7evzppb-{0}-ioz342gtpy-ioz342gtpy.gz
 C:\Users\joshu\RiderProjects\CA1_SOA_EsportsNOW\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\compressed\nzl7evzppb-{0}-mr2slvjfv8-mr2slvjfv8.gz
+C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\compressed\nzl7evzppb-{0}-83vdeabj6l-83vdeabj6l.gz

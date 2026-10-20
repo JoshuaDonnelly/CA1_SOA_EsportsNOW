@@ -247,7 +247,13 @@ header {
 .header-right {
     display: flex;
     justify-content: flex-end;
+    gap: 24px;
     align-items: center;
+}
+
+
+.headerLinks:hover {
+    color: #2b4c83 !important;
 }
 .backButton {
     display: flex;

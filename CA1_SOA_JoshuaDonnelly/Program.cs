@@ -1,12 +1,18 @@
+using CA1_SOA_JoshuaDonnelly;
 using CA1_SOA_JoshuaDonnelly.Components;
 
+
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddScoped<TwitchStreamService>();
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

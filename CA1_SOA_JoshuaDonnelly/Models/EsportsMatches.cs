@@ -9,4 +9,6 @@ public class EsportsMatches
     public string StartTime { get; set; } = "";
     public string TeamOneImage { get; set; } = "";
     public string TeamTwoImage { get; set; } = "";
+    
+    public string countdown { get; set; } = "";
 }

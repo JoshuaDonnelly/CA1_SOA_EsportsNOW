@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using System.Runtime.InteropServices.JavaScript
 @using CA1_SOA_JoshuaDonnelly.Models
 @inject NavigationManager Navigation
 
@@ -38,7 +39,9 @@ else
     
     @foreach (var match in FilteredMatches)
     {
-        <div class="card gameCard"
+        var countdownTimer = @CountdownMatchHelper.GetCountdown(match.StartTime);
+        
+            <div class="card gameCard"
              style="cursor: pointer;"
              @onclick='() => OpenGame(match.Game)'>
 
@@ -50,6 +53,14 @@ else
             </div>
             <p>@match.Tournament</p>
             <p>@match.StartTime</p>
+            <div class="matchCountdown">
+                @if (countdownTimer.Equals("Starting Soon") ) {<p style ="color: yellow">@countdownTimer</p>}
+                else if (countdownTimer.Equals("Already Started") ) {<p style ="color: red">@countdownTimer</p>}
+                else
+                {
+                    <p style="color: green;">@countdownTimer</p>
+                }
+            </div>
         </div>
     }
 }
@@ -61,6 +72,7 @@ else
     private bool shouldRender;
     private string SearchTextMatches = "";
     private string SelectedGameEsports = "All";
+    private string countdown = "";
     
     // Searching
     private IEnumerable<EsportsMatches> FilteredMatches =>

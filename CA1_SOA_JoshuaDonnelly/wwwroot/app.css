@@ -108,6 +108,35 @@ h1:focus {
     border-radius: 4px;
     text-align: left;
 }
+.gameFilterOpener {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #424242;
+    background-color: #121212;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 12px;
+}
+.gameFilterOpener:hover {
+    border-color: #2b4c83;
+    cursor: pointer;
+}
+.gameFilterLeft {
+    display: flex;
+    padding-left: 8px;
+    align-items: center;
+    color: #424242;
+}
+.gameFilterRight {
+    display: flex;
+    padding-right: 8px;
+    align-items: center;
+    color: #6a6a6a;
+}
+.matchCountdown {
+    
+}
 .gameCard {
     background-color: #121212 ;
     padding: 3px;

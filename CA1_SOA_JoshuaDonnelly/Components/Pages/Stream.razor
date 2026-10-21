@@ -4,6 +4,7 @@
 @page "/Stream"
 @using CA1_SOA_JoshuaDonnelly;
 @using CA1_SOA_JoshuaDonnelly.Models
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 @if (!shouldRender)
@@ -21,25 +22,31 @@ else if (LiveStreams.Count == 0)
 }
 else
 {
-    <h3 class = "EsportsMatchHeading">Game Filter for Streams</h3>
-    <div class = "streamContainer">
-    @foreach (var game in Games)
+    <div class="gameFilterOpener" @onclick="handleGameOpener">
+        <div class ="gameFilterLeft">Game Filter</div>
+        <i class ="fa fa-chevron-down gameFilterRight" style="font-size:8px"></i>
+    </div>
+    @if (isGameFilterOpen)
     {
-        <div class="card streamCard" @onclick="() => OpenGameDetails(game.Name)">
-            
-            <img src ="@game.ImageURL"
-                 alt="@game.Name"
-                 class = "gameCardImage" />
-            
-            <h4>@game.Name</h4>
-            
-            <p>Total Live Viewers: @game.totalViewers.ToString("N0")</p>
+        <div class="streamContainer" @bind="isGameFilterOpen">
+            @foreach (var game in Games)
+            {
+                <div class="card streamCard" @onclick="() => OpenGameDetails(game.Name)">
+
+                    <img src="@game.ImageURL"
+                         alt="@game.Name"
+                         class="gameCardImage"/>
+
+                    <h4>@game.Name</h4>
+
+                    <p>Total Live Viewers: @game.totalViewers.ToString("N0")</p>
+                </div>
+            }
         </div>
     }
-    </div>
 
-    <div class = "divider"></div>
-    
+    <div class="divider"></div>
+
     <h1 class = "EsportsMatchHeading">All Live Streams for Ongoing Esports Games</h1>
     
     <div class="streamSearch">
@@ -62,7 +69,7 @@ else
         </div>
         <div class = "filterControl">
             <label for="streamSort">Sort by Viewers</label>
-                <select id="streamSort" placeholder="awdad" class="esportsFilterBox" @bind="SelectedViewerSort"> <br />
+                <select id="streamSort" class="esportsFilterBox" @bind="SelectedViewerSort"> <br />
                     <option value = "Most">Most Viewers</option>
                     <option value = "Least">Fewest Viewers</option>
                 </select>
@@ -74,6 +81,8 @@ else
     }
     else
     {
+        
+        
         <div class="streamContainer">
 
 
@@ -99,17 +108,20 @@ else
                     </a>
                 </div>
             }
+            
 
         </div>
     }
 }
 @code {
+
     private List<TwitchStreams> LiveStreams = new();
     private bool getStreamsError;
     private bool shouldRender;
     private string SelectedNameStreams = "All";
     private string SelectedViewerSort = "Most";
     private string SearchTextStreams = "";
+    private bool isGameFilterOpen = false;
 
     private List<Games> Games = new()
     {
@@ -151,6 +163,18 @@ else
     private void OpenGameDetails(string gameName)
     {
         Navigation.NavigateTo($"/game/{Uri.EscapeDataString(gameName)}");
+    }
+
+    private void handleGameOpener()
+    {
+        if (!isGameFilterOpen)
+        {
+            isGameFilterOpen = true;
+        }
+        else
+        {
+            isGameFilterOpen = false;
+        }
     }
 
     private IEnumerable<TwitchStreams> FilteredStreams =>
@@ -205,4 +229,5 @@ else
         }
     }
 
+}
 }

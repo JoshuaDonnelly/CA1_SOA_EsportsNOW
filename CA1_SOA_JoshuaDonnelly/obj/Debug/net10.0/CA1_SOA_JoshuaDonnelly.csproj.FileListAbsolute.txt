@@ -177,4 +177,4 @@ C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\D
 C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\CA1_SOA_JoshuaDonnelly.sourcelink.json
 C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\CA1_SOA_.06A1A164.Up2Date
 C:\Users\joshu\RiderProjects\CA1_SOA_JoshuaDonnelly\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\compressed\nzl7evzppb-{0}-83vdeabj6l-83vdeabj6l.gz
-C:\Users\joshu\RiderProjects\CA1_SOA_EsportsNOW\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\compressed\nzl7evzppb-{0}-2dp9erwuwv-2dp9erwuwv.gz
+C:\Users\joshu\RiderProjects\CA1_SOA_EsportsNOW\CA1_SOA_JoshuaDonnelly\obj\Debug\net10.0\compressed\nzl7evzppb-{0}-5c2dcjfo0v-5c2dcjfo0v.gz

@@ -5,10 +5,10 @@
 @using CA1_SOA_JoshuaDonnelly;
 @using CA1_SOA_JoshuaDonnelly.Models
 
-<h3>Stream</h3>
+
 @if (!shouldRender)
 {
-    
+    <p class = "loadingText">Twitch Streams Loading...</p>
 }
 
 else if (getStreamsError)
@@ -21,7 +21,26 @@ else if (LiveStreams.Count == 0)
 }
 else
 {
-    <h1 class = "EsportsMatchHeading">Live Streams for Ongoing Esports Games</h1>
+    <h3 class = "EsportsMatchHeading">Game Filter for Streams</h3>
+    <div class = "streamContainer">
+    @foreach (var game in Games)
+    {
+        <div class="card streamCard" @onclick="() => OpenGameDetails(game.Name)">
+            
+            <img src ="@game.ImageURL"
+                 alt="@game.Name"
+                 class = "gameCardImage" />
+            
+            <h4>@game.Name</h4>
+            
+            <p>Total Live Viewers: @game.totalViewers.ToString("N0")</p>
+        </div>
+    }
+    </div>
+
+    <div class = "divider"></div>
+    
+    <h1 class = "EsportsMatchHeading">All Live Streams for Ongoing Esports Games</h1>
     
     <div class="streamSearch">
         <div class = "filterControl">
@@ -91,10 +110,51 @@ else
     private string SelectedNameStreams = "All";
     private string SelectedViewerSort = "Most";
     private string SearchTextStreams = "";
-    
-    
+
+    private List<Games> Games = new()
+    {
+        new Games
+        {
+            Name = "Counter-Strike",
+            ImageURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7AFeVyN8KEelfhLqc9oYmwBT8NHhNX3ja_MpRGpM-Y6BU6hCTDkVbTEU&s=10"
+        },
+        new Games
+        {
+            Name = "Dota 2",
+            ImageURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrGVbShTUjsVD-ZBeYsZK1GKcJCcN5K-ybQKno4OAMaMtG5IQBvNoL1FQ&s=10"
+        },
+        new Games
+        {
+            Name = "Valorant",
+            ImageURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdSEHoBNfqSz-qMT03KmgFrC9aLwYFqpCCWu7CJtLT72po2muLlB64C9tS&s=10"
+        },
+        new Games
+        {
+            Name = "Rainbow Six Siege",
+            ImageURL = "https://mlpnk72yciwc.i.optimole.com/cqhiHLc.IIZS~2ef73/w:auto/h:auto/q:75/https://bleedingcool.com/wp-content/uploads/2024/02/Rainbow-Six-Siege-Year-9-Artwork.jpg"
+        },
+        new Games
+        {
+            Name = "League Of Legends",
+            ImageURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwSibefyd6mrgK_DsOI6bM6o6NzEDgWNWKZBwgTDo9urI-5R5RNm_EzKH2&s=10"
+        }
+    };
+
+    private void UpdateGameViewers()
+    {
+        foreach (var game in Games)
+        {
+            game.totalViewers = GameViewerCalc.GetTotalViewers(LiveStreams, game.Name);
+        }
+    }
+
+    private void OpenGameDetails(string gameName)
+    {
+        Navigation.NavigateTo($"/game/{Uri.EscapeDataString(gameName)}");
+    }
+
     private IEnumerable<TwitchStreams> FilteredStreams =>
-        
+
         LiveStreams.Where(stream =>
                 // Filter streams
                 (SelectedNameStreams == "All" ||
@@ -103,17 +163,18 @@ else
                      SelectedNameStreams,
                      StringComparison.OrdinalIgnoreCase))
                 &&
-        
-        
+
+
                 (string.IsNullOrWhiteSpace(SearchTextStreams) ||
                  (stream.Title?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
                  (stream.UserName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
                  (stream.GameName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false)))
-    
+
             // Sort by viewer count
             .OrderBy(stream => SelectedViewerSort == "Most"
-                ? -stream.ViewerCount : stream.ViewerCount);
-    
+                ? -stream.ViewerCount
+                : stream.ViewerCount);
+
     protected override async Task OnInitializedAsync()
     {
         try
@@ -126,10 +187,12 @@ else
                 "Valorant",
                 "Dota 2"
             };
-               
+
 
             LiveStreams = await TwitchStreamService
                 .GetStreamsForGamesAsync(Configuration, gameNames);
+
+            UpdateGameViewers();
         }
         catch (Exception ex)
         {
@@ -141,4 +204,5 @@ else
             shouldRender = true;
         }
     }
+
 }

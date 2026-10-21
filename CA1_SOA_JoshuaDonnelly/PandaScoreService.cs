@@ -64,8 +64,6 @@ public class PandaScoreService
                         game = "Rainbow Six Siege";
                     }
                     
-                    
-
                     var teamOneImage = "No Image";
                     var teamTwoImage = "No Image";
                     

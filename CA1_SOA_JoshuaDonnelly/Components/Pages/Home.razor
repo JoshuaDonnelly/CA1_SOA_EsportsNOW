@@ -38,7 +38,6 @@ else
     
     @foreach (var match in FilteredMatches)
     {
-        
         <div class="card gameCard"
              style="cursor: pointer;"
              @onclick='() => OpenGame(match.Game)'>
@@ -52,111 +51,22 @@ else
             <p>@match.Tournament</p>
             <p>@match.StartTime</p>
         </div>
-        
-    }
-    <div class = "divider"></div>
-}
-
-@if (!shouldRender)
-{
-    
-}
-
-else if (getStreamsError)
-{
-    <p class = "errorTextOnLoad">There was an error retrieving Twitch streams.</p>
-}
-else if (LiveStreams.Count == 0)
-{
-    <p class = "errorTextOnLoad">No matching live streams were found.</p>
-}
-else
-{
-    <h1 class = "EsportsMatchHeading">Live Streams for Ongoing Esports Games</h1>
-    
-    <div class="streamSearch">
-        <div class = "filterControl">
-            <input class="esportsSearchBox" type="search" @bind="SearchTextStreams" @bind:event="oninput" placeholder="Search Live Streams"/>
-        </div>
-        
-        <div class = "filterControl">
-            <label for="streamFilter">Filter by Streamer</label>
-                <select id="streamFilter" class="esportsFilterBox" @bind="SelectedNameStreams">
-                    <option value="All">All Streamers</option>
-                    @foreach (var userName in LiveStreams
-                                  .Select(stream => stream.UserName)
-                                  .Where(name => !string.IsNullOrWhiteSpace(name))
-                                  .Distinct())
-                    {
-                        <option value="@userName">@userName</option>
-                    }
-                </select>
-        </div>
-        <div class = "filterControl">
-            <label for="streamSort">Sort by Viewers</label>
-                <select id="streamSort" placeholder="awdad" class="esportsFilterBox" @bind="SelectedViewerSort"> <br />
-                    <option value = "Most">Most Viewers</option>
-                    <option value = "Least">Fewest Viewers</option>
-                </select>
-        </div>
-    </div>
-    @if (!FilteredStreams.Any())
-    {
-        <p class = "errorTextOnLoad">No Matching Live Streams</p>
-    }
-    else
-    {
-        <div class="streamContainer">
-
-
-            @foreach (var stream in FilteredStreams)
-            {
-                <div class="card streamCard">
-
-                    @if (!string.IsNullOrWhiteSpace(stream.ThumbnailUrl))
-                    {
-                        <img src="@stream.ThumbnailUrl"
-                             alt="Stream Thumbnail for @stream.UserName"
-                             class="streamCardImage"/>
-                    }
-                    <h4 class="streamUser">@stream.UserName</h4>
-                    <p class="streamTitle"> @stream.Title</p>
-                    <p>Viewers:
-                        @stream.ViewerCount</p>
-
-                    <a href="@($"https://www.twitch.tv/{stream.UserLogin}")"
-                       target="_blank"
-                       rel="noopener noreferrer">
-                        Watch on Twitch
-                    </a>
-                </div>
-            }
-
-        </div>
     }
 }
-
 
 @code
 {
-    private List<TwitchStreams> LiveStreams = new();
-    private bool getStreamsError;
     private IEnumerable<EsportsMatches>? Matches = [];
     private bool getMatchesError;
     private bool shouldRender;
     private string SearchTextMatches = "";
-    private string SearchTextStreams = "";
     private string SelectedGameEsports = "All";
-    private string SelectedNameStreams = "All";
-    private string SelectedViewerSort = "Most";
-    
-    
     
     // Searching
     private IEnumerable<EsportsMatches> FilteredMatches =>
-        
-        (Matches ??  Enumerable.Empty<EsportsMatches>()) 
-    
+
+        (Matches ?? Enumerable.Empty<EsportsMatches>())
+
         .Where(match =>
             // Filter matches
             (SelectedGameEsports == "All" ||
@@ -164,43 +74,20 @@ else
                  match.Game,
                  SelectedGameEsports,
                  StringComparison.OrdinalIgnoreCase))
-            
+
             &&
-            
+
             // Search Matches
             (string.IsNullOrWhiteSpace(SearchTextMatches) ||
-            (match.Game?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
-            (match.TeamOne?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
-            (match.TeamTwo?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
-            (match.Tournament?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false))
-            
+             (match.Game?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+             (match.TeamOne?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+             (match.TeamTwo?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+             (match.Tournament?.Contains(SearchTextMatches, StringComparison.InvariantCultureIgnoreCase) ?? false))
+
         );
-    
-    private IEnumerable<TwitchStreams> FilteredStreams =>
-        
-        LiveStreams.Where(stream =>
-            // Filter streams
-            (SelectedNameStreams == "All" ||
-                string.Equals(
-                    stream.UserName,
-                    SelectedNameStreams,
-                    StringComparison.OrdinalIgnoreCase))
-        &&
-        
-        
-            (string.IsNullOrWhiteSpace(SearchTextStreams) ||
-            (stream.Title?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
-            (stream.UserName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
-            (stream.GameName?.Contains(SearchTextStreams, StringComparison.InvariantCultureIgnoreCase) ?? false)))
-    
-    // Sort by viewer count
-    .OrderBy(stream => SelectedViewerSort == "Most"
-        ? -stream.ViewerCount : stream.ViewerCount);
-        
-    
-    
-    [Inject]
-    public IConfiguration Configuration  { get; set; } = null!;
+
+
+    [Inject] public IConfiguration Configuration { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -208,8 +95,6 @@ else
         {
             Matches = await PandaScoreService.GetUpcomingMatchesAsync(Configuration);
             
-            
-
             if (Matches == null || !Matches.Any())
             {
                 getMatchesError = true;
@@ -220,27 +105,16 @@ else
             Console.WriteLine(ex);
             getMatchesError = true;
         }
-        shouldRender = true;
 
-        if (Matches != null && Matches.Any())
-        {
-            try
-            {
-                var gameNames = Matches.Select(m => m.Game);
-                LiveStreams = await TwitchStreamService.GetStreamsForGamesAsync(Configuration, gameNames);
-            }
-            catch (Exception ex)
-            {
-                getStreamsError = true;
-                Console.WriteLine(ex);
-            }
-        }
+        shouldRender = true;
+        
     }
+
     private void OpenGame(string gameName)
     {
         Console.WriteLine($"Clicked game: {gameName}");
         Navigation.NavigateTo($"/game/{Uri.EscapeDataString(gameName)}");
     }
-    
-    
+
+
 }
